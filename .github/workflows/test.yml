@@ -24,6 +24,3 @@ jobs:
               run: pnpm install
             - name: "Test"
               run: pnpm run test
-            - name: "Report Coverage"
-              if: always() # Also generate the report if tests are failing
-              uses: davelosert/vitest-coverage-report-action@v2
