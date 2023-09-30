@@ -4,7 +4,8 @@
 	"type": "module",
 	"scripts": {
 		"build": "vite build",
-		"dev": "vitest watch"
+		"dev": "vitest watch",
+		"test": "vitest run"
 	},
 	"main": "./dist/miniseed.js",
 	"module": "./dist/miniseed.js",
