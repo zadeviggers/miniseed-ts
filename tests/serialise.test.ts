@@ -80,8 +80,6 @@ describe("Serialisation", () => {
 			encoding: "Int32",
 		}).slice(40);
 
-		console.log(serialised);
-
 		const data = new Int32Array(serialised);
 
 		expect(data[0]).toEqual(1);
