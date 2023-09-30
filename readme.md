@@ -1,12 +1,20 @@
 # miniSEED-ts
 
-miniSEED-ts is a Typescript implementation of miniSEED.
+miniSEED-ts is a Typescript implementation of the miniSEED binary format.
+
+You can [read more about miniSEED here](https://docs.fdsn.org/projects/miniseed3/en/latest/index.html).
+
+miniSEED-ts is powered by [jDataView](https://github.com/jDataView/jDataView).
 
 ## Installation
 
 ```sh
 npm i miniseed
 ```
+
+Typescript definitions are included.
+
+## Usage
 
 ```ts
 import {

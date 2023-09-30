@@ -1,6 +1,6 @@
 {
 	"name": "miniseed",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"type": "module",
 	"scripts": {
 		"build": "vite build",
@@ -8,6 +8,7 @@
 	},
 	"main": "./dist/miniseed.js",
 	"module": "./dist/miniseed.js",
+	"types": "./dist/miniseed.d.ts",
 	"exports": {
 		".": {
 			"import": "./dist/miniseed.js"
@@ -15,6 +16,10 @@
 	},
 	"files": [
 		"dist/"
+	],
+	"keywords": [
+		"binary",
+		"miniseed"
 	],
 	"repository": {
 		"type": "git",
@@ -24,7 +29,8 @@
 	"devDependencies": {
 		"typescript": "^5.2.2",
 		"vite": "^4.4.9",
-		"vitest": "^0.34.6"
+		"vitest": "^0.34.6",
+		"vite-plugin-dts": "^3.6.0"
 	},
 	"dependencies": {
 		"crc-32": "^1.2.2",
