@@ -1,0 +1,29 @@
+name: "Test"
+on:
+    - pull_request
+    - push
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        permissions:
+            contents: read
+            pull-requests: write
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: "Install Node"
+              uses: actions/setup-node@v3
+              with:
+                  node-version: latest
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+            - name: "Install Deps"
+              run: pnpm install
+            - name: "Test"
+              run: pnpx vitest --coverage
+            - name: "Report Coverage"
+              if: always() # Also generate the report if tests are failing
+              uses: davelosert/vitest-coverage-report-action@v2
