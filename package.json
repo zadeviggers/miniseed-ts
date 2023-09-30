@@ -1,6 +1,6 @@
 {
 	"name": "miniseed",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"type": "module",
 	"scripts": {
 		"build": "vite build",
@@ -16,6 +16,11 @@
 	"files": [
 		"dist/"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/zadeviggers/miniseed-ts.git"
+	},
+	"homepage": "https://github.com/zadeviggers/miniseed-ts#readme",
 	"devDependencies": {
 		"typescript": "^5.2.2",
 		"vite": "^4.4.9",
