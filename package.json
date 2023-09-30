@@ -6,6 +6,16 @@
 		"build": "vite build",
 		"dev": "vitest watch"
 	},
+	"main": "./dist/miniseed.js",
+	"module": "./dist/miniseed.js",
+	"exports": {
+		".": {
+			"import": "./dist/miniseed.js"
+		}
+	},
+	"files": [
+		"dist/"
+	],
 	"devDependencies": {
 		"typescript": "^5.2.2",
 		"vite": "^4.4.9",
