@@ -12,7 +12,21 @@ jobs:
             pull-requests: write
 
         steps:
-            - uses: actions/checkout@v4
+            - name: "Checkout: local"
+              uses: actions/checkout@v4
+            - name: "Checkout: mseed3-utils"
+              uses: actions/checkout@v4
+              with:
+                  repository: EarthScope/mseed3-utils
+                  path: "mseed3-utils"
+            - working-directory: ./mseed3-utils
+              run: mkdir build
+            - name: "Build mseed3-utils"
+              working-directory: ./mseed3-utils/build
+              run: cmake ..
+            - name: "Install mseed3-utils"
+              working-directory: ./mseed3-utils/build
+              run: make install
             - uses: pnpm/action-setup@v2
               with:
                   version: 8

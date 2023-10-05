@@ -135,11 +135,9 @@ export function serialiseToMiniSEEDBuffer<T extends keyof typeof encodingTypes>(
 	view.writeUint32(samples.length);
 
 	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-8
-	// https://datatracker.ietf.org/doc/html/rfc3309
-	const crc = bufToCRC(
-		metadata.encoding === "text" ? encodedText! : (samples as number[])
-	);
-	view.writeUint32(crc); // Temp
+	// CRC can't be calculated until the whole record is generated.
+	// Write zeros for now
+	view.writeUint32(0);
 
 	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-9
 	view.writeUint8(metadata.dataPublicationVersion);
@@ -180,6 +178,12 @@ export function serialiseToMiniSEEDBuffer<T extends keyof typeof encodingTypes>(
 			}
 		}
 	}
+
+	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-8
+	// https://datatracker.ietf.org/doc/html/rfc3309
+	// Now that the whole record is generated, we can calculate the CRC and add it.
+	const crc = bufToCRC(new Uint8Array(view.buffer));
+	view.setUint32(28, crc);
 
 	return view.buffer;
 }

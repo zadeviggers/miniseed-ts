@@ -69,3 +69,11 @@ console.log(serialiseToMiniSEEDBuffer(data, metadata)); // ArrayBuffer
 I wish I could use streams for this. Unfortunately, miniSEED requires setting the body length in one of the headers. This means we can't start generating the response until we have all the data for the body.
 
 We could try and estimate the body length though. E.g. if you want to stream the result of a huge database query as miniSEED, you could first do a `SELECT COUNT(*) ...` before the actual query, and use that, plus the encoding size to estimate the length of the body, thereby allowing you to stream the generated miniSEED data. I may look into doing something like this in the future.
+
+## Contributing
+
+Contributions are welcome, especially fixes for things I might have done wrong.
+
+Please write tests for anything you add.
+
+[mseed3-utils](https://github.com/EarthScope/mseed3-utils) are very helpful for debugging and validating files.
