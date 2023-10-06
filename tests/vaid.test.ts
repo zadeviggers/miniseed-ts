@@ -14,7 +14,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-	// await rm(tempFolder, { recursive: true });
+	await rm(tempFolder, { recursive: true });
 });
 
 describe("Generated data validity", () => {

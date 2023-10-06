@@ -1,5 +1,6 @@
 import { jDataView } from "z-jdataview-temp-publish";
 import { buf as bufToCRC } from "crc-32/crc32c";
+import { getDayOfYear } from "./utils";
 
 const encodingTypes = {
 	text: { code: 0, byteSize: 1 },
@@ -56,20 +57,9 @@ export function serialiseToMiniSEEDBuffer<T extends keyof typeof encodingTypes>(
 
 	if (metadata.startTime instanceof Date) {
 		// From https://stackoverflow.com/a/8619946
-		const start = new Date(metadata.startTime.getFullYear(), 0, 0);
-		const diff =
-			metadata.startTime.valueOf() -
-			start.valueOf() +
-			(start.getTimezoneOffset() -
-				metadata.startTime.getTimezoneOffset()) *
-				60 *
-				1000;
-		const oneDay = 1000 * 60 * 60 * 24;
-		const dayOfYear = Math.floor(diff / oneDay);
-
 		metadata.startTime = {
 			year: metadata.startTime.getFullYear(),
-			dayOfYear,
+			dayOfYear: getDayOfYear(metadata.startTime),
 			hour: metadata.startTime.getHours(),
 			minute: metadata.startTime.getMinutes(),
 			second: metadata.startTime.getSeconds(),
