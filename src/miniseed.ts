@@ -56,16 +56,17 @@ export function serialiseToMiniSEEDBuffer<T extends keyof typeof encodingTypes>(
 	let metadata = { ...metadataDefaults, ..._metadata };
 
 	if (metadata.startTime instanceof Date) {
-		// From https://stackoverflow.com/a/8619946
+		if (isNaN(metadata.startTime.getTime()))
+			throw new Error("Invalid Date provided for metadata.timestamp");
 		metadata.startTime = {
 			year: metadata.startTime.getFullYear(),
 			dayOfYear: getDayOfYear(metadata.startTime),
 			hour: metadata.startTime.getHours(),
 			minute: metadata.startTime.getMinutes(),
 			second: metadata.startTime.getSeconds(),
-			// Date's don't do nanoseconds :(
-			// One day we may get Temporal and all will be well
-			nanoSecond: 0,
+			// This isn't super precise.
+			// One day we may get Temporal and all will be well.
+			nanoSecond: metadata.startTime.getMilliseconds() * 1000000,
 		};
 	}
 

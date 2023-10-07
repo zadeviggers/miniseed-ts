@@ -62,7 +62,7 @@ describe("Size", () => {
 	});
 });
 
-describe("Serialisation", () => {
+describe("Basic serialisation", () => {
 	it("Works with basic text", () => {
 		const serialised = serialiseToMiniSEEDBuffer("beans", {
 			sourceIdentifier: "",
