@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
 	serialiseToMiniSEEDBuffer,
 	serialiseToMiniSEEDUint8Array,
+	startTimeFromDate,
 } from "../src/miniseed";
 import jDataView from "z-jdataview-temp-publish";
 
@@ -9,14 +10,14 @@ describe("Size", () => {
 	it("Works with no data", () => {
 		const serialised = serialiseToMiniSEEDUint8Array([], {
 			sourceIdentifier: "",
-			startTime: new Date(),
+			startTime: startTimeFromDate(new Date()),
 		});
 		expect(serialised.length).toEqual(40);
 	});
 	it("Works with complex identifiers", () => {
 		const serialised = serialiseToMiniSEEDUint8Array([], {
 			sourceIdentifier: "🔥🦊",
-			startTime: new Date(),
+			startTime: startTimeFromDate(new Date()),
 		});
 		expect(serialised.length).toEqual(48);
 	});
@@ -56,7 +57,7 @@ describe("Size", () => {
 					],
 				},
 			},
-			startTime: new Date(),
+			startTime: startTimeFromDate(new Date()),
 		});
 		expect(serialised.length).toEqual(517);
 	});
@@ -66,7 +67,7 @@ describe("Basic serialisation", () => {
 	it("Works with basic text", () => {
 		const serialised = serialiseToMiniSEEDBuffer("beans", {
 			sourceIdentifier: "",
-			startTime: new Date(),
+			startTime: startTimeFromDate(new Date()),
 			encoding: "text",
 		}).slice(40);
 
@@ -76,7 +77,7 @@ describe("Basic serialisation", () => {
 	it("Works with basic numbers", () => {
 		const serialised = serialiseToMiniSEEDBuffer([1, 2, 3, 4, 5], {
 			sourceIdentifier: "",
-			startTime: new Date(),
+			startTime: startTimeFromDate(new Date()),
 			encoding: "Int32",
 		}).slice(40);
 

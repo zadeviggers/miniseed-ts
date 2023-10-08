@@ -3,7 +3,10 @@ import { promisify } from "node:util";
 import { writeFile, mkdir, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { serialiseToMiniSEEDUint8Array } from "../src/miniseed";
+import {
+	serialiseToMiniSEEDUint8Array,
+	startTimeFromDate,
+} from "../src/miniseed";
 
 const exec = promisify(_exec);
 
@@ -49,7 +52,7 @@ describe("Basic data validity", () => {
 		const data = [1, 2, 3, 4, 5, 6, 7, 8];
 		const serialised = serialiseToMiniSEEDUint8Array(data, {
 			sourceIdentifier: "https://zade.viggers.net/example",
-			startTime: new Date(),
+			startTime: startTimeFromDate(new Date()),
 		});
 		await checkData(serialised, "1-2-3");
 	});
@@ -59,7 +62,7 @@ describe("Date validity", () => {
 	it("Works with a 0 date", async () => {
 		const serialised = serialiseToMiniSEEDUint8Array([], {
 			sourceIdentifier: "https://zade.viggers.net/example",
-			startTime: new Date(0),
+			startTime: startTimeFromDate(new Date(0)),
 		});
 		await checkData(serialised, "date-0-auto");
 	});
@@ -80,7 +83,7 @@ describe("Date validity", () => {
 	it("Works with a new date right now", async () => {
 		const serialised = serialiseToMiniSEEDUint8Array([], {
 			sourceIdentifier: "https://zade.viggers.net/example",
-			startTime: new Date(),
+			startTime: startTimeFromDate(new Date()),
 		});
 		await checkData(serialised, "date-utc");
 	});

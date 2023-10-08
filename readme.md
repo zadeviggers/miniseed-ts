@@ -20,6 +20,7 @@ Typescript definitions are included.
 import {
 	serialiseToMiniSEEDBuffer,
 	serialiseToMiniSEEDUint8Array,
+	startTimeFromDate,
 	Flags,
 } from "miniseed";
 
@@ -27,7 +28,18 @@ const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 const metadata = {
 	sourceIdentifier: "FDSN:<network>_<station>_...", // An FDSN ID: http://docs.fdsn.org/projects/source-identifiers/
-	startTime: new Date(), // Or you can manually specify nanoseconds, seconds, etc
+	// You can manually specify nanoseconds, seconds, etc
+	startTime: {
+		year: 1978,
+		dayOfYear: 264,
+		hour: 21,
+		minute: 0,
+		second: 0, // This needs to be an integer
+		// There's no milliseconds field - they're included in nanoSecond
+		nanoSecond: 0,
+	},
+	// Or use a helper function to convert from a Date object
+	startTime: startTimeFromDate(new Date()),
 	encoding: "Int32", // Or text, Int16, Float32, Float64
 
 	// All other metadata fields are optional, but supported.

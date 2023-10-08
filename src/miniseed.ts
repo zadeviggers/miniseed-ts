@@ -16,6 +16,15 @@ export const Flags = {
 	CLOCK_LOCKED: 0b00100000,
 };
 
+type StartTimeData = {
+	nanoSecond: number;
+	year: number;
+	dayOfYear: number;
+	hour: number;
+	minute: number;
+	second: number;
+};
+
 type Metadata<T extends keyof typeof encodingTypes> = {
 	flags?: number;
 	encoding?: T;
@@ -23,16 +32,7 @@ type Metadata<T extends keyof typeof encodingTypes> = {
 	dataPublicationVersion?: number;
 	extraHeaderFields?: any;
 	sourceIdentifier: string;
-	startTime:
-		| Date
-		| {
-				nanoSecond: number;
-				year: number;
-				dayOfYear: number;
-				hour: number;
-				minute: number;
-				second: number;
-		  };
+	startTime: StartTimeData;
 };
 
 const metadataDefaults = {
@@ -42,6 +42,22 @@ const metadataDefaults = {
 	dataPublicationVersion: 0,
 	extraHeaderFields: undefined,
 };
+
+export function startTimeFromDate(date: Date): StartTimeData {
+	if (isNaN(date.getTime()))
+		throw new Error("Invalid Date provided for metadata.timestamp");
+
+	return {
+		year: date.getFullYear(),
+		dayOfYear: getDayOfYear(date),
+		hour: date.getHours(),
+		minute: date.getMinutes(),
+		second: date.getSeconds(),
+		// This isn't super precise.
+		// One day we may get Temporal and all will be well.
+		nanoSecond: date.getMilliseconds() * 1000000,
+	};
+}
 
 /**
  * Serialises an array of numbers to miniSEED v3 format,
@@ -54,21 +70,6 @@ export function serialiseToMiniSEEDBuffer<T extends keyof typeof encodingTypes>(
 	_metadata: Metadata<T>
 ): ArrayBuffer {
 	let metadata = { ...metadataDefaults, ..._metadata };
-
-	if (metadata.startTime instanceof Date) {
-		if (isNaN(metadata.startTime.getTime()))
-			throw new Error("Invalid Date provided for metadata.timestamp");
-		metadata.startTime = {
-			year: metadata.startTime.getFullYear(),
-			dayOfYear: getDayOfYear(metadata.startTime),
-			hour: metadata.startTime.getHours(),
-			minute: metadata.startTime.getMinutes(),
-			second: metadata.startTime.getSeconds(),
-			// This isn't super precise.
-			// One day we may get Temporal and all will be well.
-			nanoSecond: metadata.startTime.getMilliseconds() * 1000000,
-		};
-	}
 
 	const encodingInfo = encodingTypes[metadata.encoding];
 
