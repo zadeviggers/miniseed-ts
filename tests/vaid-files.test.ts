@@ -66,20 +66,6 @@ describe("Date validity", () => {
 		});
 		await checkData(serialised, "date-0-auto");
 	});
-	// it("Works with a manually set 0 date", async () => {
-	// 	const serialised = serialiseToMiniSEEDUint8Array([], {
-	// 		sourceIdentifier: "https://zade.viggers.net/example",
-	// 		startTime: {
-	// 			dayOfYear: 0,
-	// 			year: 0,
-	// 			hour: 0,
-	// 			minute: 0,
-	// 			second: 0,
-	// 			nanoSecond: 0,
-	// 		},
-	// 	});
-	// 	await checkData(serialised, "date-0-manual");
-	// });
 	it("Works with a new date right now", async () => {
 		const serialised = serialiseToMiniSEEDUint8Array([], {
 			sourceIdentifier: "https://zade.viggers.net/example",
