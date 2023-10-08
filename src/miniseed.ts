@@ -104,24 +104,21 @@ export function serialiseToMiniSEEDBuffer<T extends keyof typeof encodingTypes>(
 	view.writeString("MS");
 
 	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-2
-	// NOTE: The spec specifies little-endian=true for the others, and leaves it
-	// unspecified for Uint8's, so I'm assuming false
-	view.writeUint8(3, false);
+	view.writeUint8(3);
 
 	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-3
-	view.writeUint8(metadata.flags, false);
+	view.writeUint8(metadata.flags);
 
 	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-4
 	view.writeUint32(metadata.startTime.nanoSecond);
 	view.writeUint16(metadata.startTime.year);
 	view.writeUint16(metadata.startTime.dayOfYear);
-
-	view.writeUint8(metadata.startTime.hour, false);
-	view.writeUint8(metadata.startTime.minute, false);
-	view.writeUint8(metadata.startTime.second, false);
+	view.writeUint8(metadata.startTime.hour);
+	view.writeUint8(metadata.startTime.minute);
+	view.writeUint8(metadata.startTime.second);
 
 	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-5
-	view.writeUint8(encodingInfo.code, false);
+	view.writeUint8(encodingInfo.code);
 
 	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-6
 	view.writeFloat64(metadata.sampleRatePeriod);
@@ -135,10 +132,10 @@ export function serialiseToMiniSEEDBuffer<T extends keyof typeof encodingTypes>(
 	view.writeUint32(0);
 
 	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-9
-	view.writeUint8(metadata.dataPublicationVersion, false);
+	view.writeUint8(metadata.dataPublicationVersion);
 
 	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-10
-	view.writeUint8(sourceIdentifier.length, false);
+	view.writeUint8(sourceIdentifier.length);
 
 	// https://docs.fdsn.org/projects/miniseed3/en/latest/definition.html#field-11
 	view.writeUint16(extraHeaders.length);
